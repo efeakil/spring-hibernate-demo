@@ -5,6 +5,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import com.codersnitch.springhibernatedemo.dao.StudentDAO;
+import com.codersnitch.springhibernatedemo.entity.Student;
+
 @SpringBootApplication
 public class SpringHibernateDemoApplication {
 
@@ -13,10 +16,25 @@ public class SpringHibernateDemoApplication {
 	}
 
 	@Bean
-	public CommandLineRunner commandLineRunner(String[] args){
+	public CommandLineRunner commandLineRunner(StudentDAO studentDAO){
 		return runner -> {
-			System.out.println("Hello World");
+			createStudent(studentDAO);
 		};
+	}
+
+	private void createStudent(StudentDAO studentDAO) {
+		//create student object
+		System.out.println("Creating student object..");
+		Student tempStudent = new Student(
+			"Paul","Walker","paulwalker@gmail.com"
+		);
+
+		//save the student object
+		System.out.println("Saving the student");
+		studentDAO.save(tempStudent);
+
+		//display id of the saved student
+		System.out.println("Saved student. Generated id: " + tempStudent.getId());
 	}
 
 }
