@@ -1,5 +1,7 @@
 package com.codersnitch.springhibernatedemo;
 
+import java.util.List;
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -20,9 +22,44 @@ public class SpringHibernateDemoApplication {
 		return runner -> {
 			// createStudent(studentDAO);
 
-			createMultipleStudents(studentDAO);
+			//createMultipleStudents(studentDAO);
+
+			//readStudent(studentDAO);
+
+			//queryForStudents(studentDAO);
+
+			queryForStudentsByLastName(studentDAO);
 		};
 
+	} 
+
+	private void queryForStudentsByLastName(StudentDAO studentDAO) {
+		List<Student> theStudents = studentDAO.findByLastName("Us");
+		for (Student tempStudent : theStudents){
+			System.out.println(tempStudent);
+		}
+
+	}
+
+	private void queryForStudents(StudentDAO studentDAO) {
+		List<Student> theStudents = studentDAO.findAll();
+
+		for (Student tempStudent : theStudents){
+			System.out.println(tempStudent);
+		}
+	}
+
+	private void readStudent(StudentDAO studentDAO) {
+		//create Student object
+		Student tempStudent = new Student("Onur", "Güvenme", "dopest@gmail.com");
+
+		studentDAO.save(tempStudent);
+
+		System.out.println("Student saved : " + tempStudent.getId());
+
+		Student retrievedStudent = studentDAO.findById(tempStudent.getId());
+
+		System.out.println("Retrieved Student : " + retrievedStudent);
 	}
 
 	private void createMultipleStudents(StudentDAO studentDAO) {
