@@ -22,16 +22,42 @@ public class SpringHibernateDemoApplication {
 		return runner -> {
 			// createStudent(studentDAO);
 
-			//createMultipleStudents(studentDAO);
+			createMultipleStudents(studentDAO);
 
 			//readStudent(studentDAO);
 
 			//queryForStudents(studentDAO);
 
-			queryForStudentsByLastName(studentDAO);
+			//queryForStudentsByLastName(studentDAO);
+
+			//updateStudent(studentDAO);
+
+			//deleteStudent(studentDAO);
+
+			//deleteStudents(studentDAO);
 		};
 
 	} 
+
+	private void deleteStudents(StudentDAO studentDAO) {
+		System.out.println("Deleting all students..");
+		int numberOfDeletedStudents = studentDAO.deleteAll();
+		System.out.println(numberOfDeletedStudents + " students deleted.");
+	}
+
+	private void deleteStudent(StudentDAO studentDAO) {
+		int studentId = 4;
+		System.out.println("Deleting student id: " + studentId);
+
+		studentDAO.delete(studentId);
+	}
+
+	private void updateStudent(StudentDAO studentDAO) {
+		Student theStudent = studentDAO.findById(4);
+		theStudent.setFirstName("Scooby");
+		studentDAO.update(theStudent);
+		System.out.println(studentDAO.findById(4));
+	}
 
 	private void queryForStudentsByLastName(StudentDAO studentDAO) {
 		List<Student> theStudents = studentDAO.findByLastName("Us");
